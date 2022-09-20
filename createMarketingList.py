@@ -22,39 +22,39 @@
 
 
 import csv
+from itertools import count
 
 # open the vendorlist file
-
+infile = open('vendorlist.csv', 'r')
 
 # create a csv object from the file object
-
+csvfile = csv.reader(infile, delimiter = ',')
 
 # create an output file
+outfile = open('marketinglistFINAL.csv', 'w')
 
-
-
-
+outfile.write('Name,Email,Phone' + '\n')
+next(csvfile)
 
 # create an empty dictionary
-
-
+vendor = {}
 
 # iterate through the csv object
-
-
-
-
-    # add the key-value pair to the dictionary
-
-
+for contact in infile:
+    person = contact.split(',')[1]+ ' ' + contact.split(',')[2]
+    email = contact.split(',')[4]
+    phone = contact.strip('\n').split(',')[5]
+    vendor[person] = {'email': email, 'phone': phone}
 
 # print the dictionary after the loop is finished
-
+print(vendor)
 
 
 # iternate through the dictionary and write to the output file
-
-
+count = 0
+for target in vendor:
+    outfile.write(list(vendor.keys())[count] + ',' + vendor[target]['email'] + ',' + vendor[target]['phone'] + '\n')
+    count += 1
 
 # close your output file
-
+outfile.close()
